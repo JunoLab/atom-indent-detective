@@ -5,8 +5,9 @@ module.exports =
     @selector ?= new SelectListView
     @selector.setItems []
     @selector.storeFocusedElement()
+    @selector.getFilterKey = => 'text'
     @selector.viewForItem = (item) =>
-      "<li>#{item}</li>"
+      "<li>#{item.text}</li>"
 
     if xs.constructor == Promise
       @selector.setLoading "Loading..."
