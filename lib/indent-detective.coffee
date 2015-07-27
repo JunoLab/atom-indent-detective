@@ -78,6 +78,7 @@ module.exports = GuessIndent =
     items = [{text: "1 Space", length: 1}]
     items.push(({text: "#{n} Spaces", length: n} for n in [2, 3, 4, 6, 8])...)
     items.push {text: "Tabs"}
-    s = selector.show items, ({length}) =>
+    s = selector.show items, ({length}={}) =>
+      return unless length?
       @setSettings atom.workspace.getActiveTextEditor(), [length, length?]
       status.update()
