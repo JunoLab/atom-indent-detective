@@ -1,5 +1,5 @@
-# indent-detective package
+# Indent Detective
 
-A short description of your package.
+Indent detective tries to work out the indentation settings of your current file, sublime-style. If it can't get an answer it simply sticks with your defaults, and if it gets it wrong it's easy to change by clicking the indicator in the status bar.
 
-![A screenshot of your package](https://f.cloud.github.com/assets/69169/2290250/c35d867a-a017-11e3-86be-cd7c5bf3ff9b.gif)
+![demo](http://i.imgur.com/j0YFXua.gif)
