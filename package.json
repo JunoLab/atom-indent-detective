@@ -2,10 +2,10 @@
   "name": "indent-detective",
   "main": "./lib/indent-detective",
   "version": "0.0.0",
-  "description": "A short description of your package",
+  "description": "Detect indentation settings in the active editor",
   "keywords": [
   ],
-  "repository": "https://github.com/atom/indent-detective",
+  "repository": "https://github.com/JunoLab/atom-indent-detective",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
