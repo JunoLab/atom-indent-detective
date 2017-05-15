@@ -4,9 +4,10 @@ selector = require './selector'
 module.exports = GuessIndent =
 
   activate: (state) ->
-    @subscription = atom.workspace.observeTextEditors (ed) =>
-      @run ed
     status.activate()
+
+    @subscription = atom.workspace.observeTextEditors (ed) =>
+      setTimeout (=> @run ed), 1000
 
     @command = atom.commands.add 'atom-text-editor',
       'smart-indent:choose-indent-settings': =>
@@ -73,6 +74,9 @@ module.exports = GuessIndent =
 
   run: (ed) ->
     @setSettings ed, @getSettings ed
+    status.updateText()
+    setTimeout (=> @run ed), 1000
+
 
   select: ->
     items = [{text: "1 Space", length: 1}]

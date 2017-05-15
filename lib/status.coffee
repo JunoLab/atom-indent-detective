@@ -36,7 +36,7 @@ module.exports =
         text = "Spaces (#{ed.getTabLength()})"
       else
         text = "Tabs"
-      @text.innerText = text
+      @text?.innerText = text
 
   update: () ->
     @updateView()
