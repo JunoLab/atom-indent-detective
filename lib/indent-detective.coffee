@@ -4,6 +4,8 @@ selector = require './selector'
 module.exports = GuessIndent =
 
   activate: (state) ->
+    @manual = new Set()
+
     status.activate()
 
     @subscription = atom.workspace.observeTextEditors (ed) =>
@@ -73,16 +75,22 @@ module.exports = GuessIndent =
       ed.setSoftTabs false
 
   run: (ed) ->
+    return if @manual.has(ed)
     @setSettings ed, @getSettings ed
     status.updateText()
     setTimeout (=> @run ed), 1000
 
-
   select: ->
-    items = [{text: "1 Space", length: 1}]
+    items = [{text: "Automatic"}]
+    items.push {text: "1 Space", length: 1}
     items.push(({text: "#{n} Spaces", length: n} for n in [2, 3, 4, 6, 8])...)
     items.push {text: "Tabs"}
-    s = selector.show items, ({length}={}) =>
-      return unless length?
-      @setSettings atom.workspace.getActiveTextEditor(), [length, length?]
+    s = selector.show items, ({text, length}={}) =>
+      ed = atom.workspace.getActiveTextEditor()
+      if text is "Automatic"
+        @manual.delete ed
+        @run ed
+        return
+      @setSettings ed, [length, length?]
+      @manual.add ed
       status.update()
