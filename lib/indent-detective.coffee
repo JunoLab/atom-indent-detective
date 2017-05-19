@@ -1,19 +1,27 @@
+{CompositeDisposable} = require 'atom'
 status = require './status'
 selector = require './selector'
 
 module.exports = GuessIndent =
 
   activate: (state) ->
-    @subscription = atom.workspace.observeTextEditors (ed) =>
-      @run ed
+    @manual = new Set()
+    @subs = new CompositeDisposable()
+
     status.activate()
+
+    @subs.add atom.workspace.observeTextEditors (ed) =>
+      setTimeout (=> @run ed), 1000
+      @subs.add ed.onDidDestroy =>
+        @manual.delete ed
 
     @command = atom.commands.add 'atom-text-editor',
       'smart-indent:choose-indent-settings': =>
         @select()
 
   deactivate: ->
-    @subscription?.dispose()
+    @subs.dispose()
+    @manual.clear()
     @command?.dispose()
     status.deactivate()
 
@@ -39,7 +47,6 @@ module.exports = GuessIndent =
     best
 
   getIndent: (ed) ->
-    window.ed = ed
     votes = {}
     last = ""
     for l in ed.getBuffer().getLines().slice(0,100)
@@ -72,13 +79,22 @@ module.exports = GuessIndent =
       ed.setSoftTabs false
 
   run: (ed) ->
+    return if @manual.has(ed)
     @setSettings ed, @getSettings ed
+    status.updateText()
+    setTimeout (=> @run ed), 1000
 
   select: ->
-    items = [{text: "1 Space", length: 1}]
+    items = [{text: "Automatic"}]
+    items.push {text: "1 Space", length: 1}
     items.push(({text: "#{n} Spaces", length: n} for n in [2, 3, 4, 6, 8])...)
     items.push {text: "Tabs"}
-    s = selector.show items, ({length}={}) =>
-      return unless length?
-      @setSettings atom.workspace.getActiveTextEditor(), [length, length?]
+    s = selector.show items, ({text, length}={}) =>
+      ed = atom.workspace.getActiveTextEditor()
+      if text is "Automatic"
+        @manual.delete ed
+        @run ed
+        return
+      @setSettings ed, [length, length?]
+      @manual.add ed
       status.update()

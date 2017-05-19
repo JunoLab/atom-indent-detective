@@ -3,6 +3,7 @@ module.exports =
     @createView()
     @subscription = atom.workspace.observeActivePaneItem =>
       @update()
+
   deactivate: ->
     @tile?.destroy()
 
@@ -36,7 +37,7 @@ module.exports =
         text = "Spaces (#{ed.getTabLength()})"
       else
         text = "Tabs"
-      @text.innerText = text
+      @text?.innerText = text
 
   update: () ->
     @updateView()
