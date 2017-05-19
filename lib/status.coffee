@@ -3,6 +3,7 @@ module.exports =
     @createView()
     @subscription = atom.workspace.observeActivePaneItem =>
       @update()
+
   deactivate: ->
     @tile?.destroy()
 

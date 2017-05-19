@@ -1,3 +1,4 @@
+{CompositeDisposable} = require 'atom'
 status = require './status'
 selector = require './selector'
 
@@ -5,18 +6,22 @@ module.exports = GuessIndent =
 
   activate: (state) ->
     @manual = new Set()
+    @subs = new CompositeDisposable()
 
     status.activate()
 
-    @subscription = atom.workspace.observeTextEditors (ed) =>
+    @subs.add atom.workspace.observeTextEditors (ed) =>
       setTimeout (=> @run ed), 1000
+      @subs.add ed.onDidDestroy =>
+        @manual.delete ed
 
     @command = atom.commands.add 'atom-text-editor',
       'smart-indent:choose-indent-settings': =>
         @select()
 
   deactivate: ->
-    @subscription?.dispose()
+    @subs.dispose()
+    @manual.clear()
     @command?.dispose()
     status.deactivate()
 
@@ -42,7 +47,6 @@ module.exports = GuessIndent =
     best
 
   getIndent: (ed) ->
-    window.ed = ed
     votes = {}
     last = ""
     for l in ed.getBuffer().getLines().slice(0,100)
