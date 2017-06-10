@@ -11,7 +11,7 @@ module.exports = GuessIndent =
     status.activate()
 
     @subs.add atom.workspace.observeTextEditors (ed) =>
-      setTimeout (=> @run ed), 1000
+      setTimeout (=> @run ed), 1500
       @subs.add ed.onDidDestroy =>
         @manual.delete ed
 
@@ -31,6 +31,14 @@ module.exports = GuessIndent =
 
   isblank: (s) -> s.match /^\s*$/
 
+  iscomment: (c, ed) ->
+    for scope in ed.scopeDescriptorForBufferPosition(c).scopes
+      if scope.indexOf('comment') > -1 or
+         scope.indexOf('docstring') > -1 or
+         scope.indexOf('string') > -1
+        return true
+    return false
+
   after: (x, y) -> x.slice(y.length, x.length)
 
   count: (d, k) ->
@@ -49,8 +57,12 @@ module.exports = GuessIndent =
   getIndent: (ed) ->
     votes = {}
     last = ""
-    for l in ed.getBuffer().getLines().slice(0,100)
+    lines = ed.getBuffer().getLines().slice(0,100)
+    for row in [0..100]
+      l = lines[row]
+      if row >= lines.length then break
       if @isblank l then continue
+      if @iscomment [row, 0], ed then continue
       next = @indent l
       if next == last then continue
       if next.startsWith last
@@ -82,7 +94,7 @@ module.exports = GuessIndent =
     return if @manual.has(ed)
     @setSettings ed, @getSettings ed
     status.updateText()
-    setTimeout (=> @run ed), 1000
+    setTimeout (=> @run ed), 3000
 
   select: ->
     items = [{text: "Automatic"}]
