@@ -1,7 +1,7 @@
 {
   "name": "indent-detective",
   "main": "./lib/indent-detective",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Detect indentation settings in the active editor",
   "keywords": [],
   "repository": "https://github.com/JunoLab/atom-indent-detective",
