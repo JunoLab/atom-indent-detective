@@ -64,7 +64,9 @@ module.exports = GuessIndent =
       if @isblank l then continue
       if @iscomment [row, 0], ed then continue
       next = @indent l
-      if next == last then continue
+      if next == last
+        @count votes, next
+        continue
       if next.startsWith last
         @count votes, @after next, last
       else if last.startsWith next
@@ -91,7 +93,7 @@ module.exports = GuessIndent =
       ed.setSoftTabs false
 
   run: (ed) ->
-    return if @manual.has(ed)
+    return if @manual.has(ed) or ed.isDestroyed()
     @setSettings ed, @getSettings ed
     status.updateText()
     setTimeout (=> @run ed), 3000
