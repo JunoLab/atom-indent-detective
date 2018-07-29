@@ -4,6 +4,8 @@ selector = require './selector'
 
 module.exports = GuessIndent =
 
+  possibleIndentations: [2, 3, 4, 6, 8]
+
   activate: (state) ->
     @manual = new Set()
     @subs = new CompositeDisposable()
@@ -64,9 +66,8 @@ module.exports = GuessIndent =
       if @isblank l then continue
       if @iscomment [row, 0], ed then continue
       next = @indent l
-      if next == last
-        @count votes, next
-        continue
+      # only count differences in indentation
+      if next == last then continue
       if next.startsWith last
         @count votes, @after next, last
       else if last.startsWith next
@@ -100,8 +101,7 @@ module.exports = GuessIndent =
 
   select: ->
     items = [{text: "Automatic"}]
-    items.push {text: "1 Space", length: 1}
-    items.push(({text: "#{n} Spaces", length: n} for n in [2, 3, 4, 6, 8])...)
+    items.push(({text: "#{n} Spaces", length: n} for n in @possibleIndentations)...)
     items.push {text: "Tabs"}
     s = selector.show items, ({text, length}={}) =>
       ed = atom.workspace.getActiveTextEditor()
