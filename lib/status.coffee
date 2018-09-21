@@ -19,7 +19,7 @@ module.exports =
     @view.appendChild @text
     @view.onclick = =>
       atom.commands.dispatch atom.views.getView(atom.workspace.getActiveTextEditor()),
-       'smart-indent:choose-indent-settings'
+       'indent-detective:choose-indent'
 
   updateView: ->
     return unless @bar?
