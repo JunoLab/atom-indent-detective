@@ -6,6 +6,7 @@ module.exports =
 
   deactivate: ->
     @tile?.destroy()
+    @subscription.dispose()
 
   consumeStatusBar: (bar) ->
     @bar = bar
