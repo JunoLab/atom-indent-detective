@@ -1,16 +1,15 @@
 module.exports =
   activate: ->
     @createView()
-    @subscription = atom.workspace.observeActivePaneItem =>
-      @update()
 
   deactivate: ->
     @tile?.destroy()
-    @subscription.dispose()
 
   consumeStatusBar: (bar) ->
     @bar = bar
-    @update()
+    @tile = @bar.addRightTile
+      item: @view
+      priority: 10.5
 
   createView: ->
     @view = document.createElement 'span'
@@ -22,15 +21,6 @@ module.exports =
       atom.commands.dispatch atom.views.getView(atom.workspace.getActiveTextEditor()),
        'indent-detective:choose-indent'
 
-  updateView: ->
-    return unless @bar?
-    if !atom.workspace.getActiveTextEditor()
-      @tile?.destroy()
-    else
-      @tile = @bar.addRightTile
-        item: @view
-        priority: 10.5
-
   updateText: ->
     ed = atom.workspace.getActiveTextEditor()
     if ed
@@ -40,6 +30,5 @@ module.exports =
         text = "Tabs"
       @text?.innerText = text
 
-  update: () ->
-    @updateView()
-    @updateText()
+  clear: ->
+    @text?.innerText = ""
