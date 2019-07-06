@@ -21,14 +21,21 @@ module.exports =
       atom.commands.dispatch atom.views.getView(atom.workspace.getActiveTextEditor()),
        'indent-detective:choose-indent'
 
-  updateText: ->
-    ed = atom.workspace.getActiveTextEditor()
-    if ed
-      if ed.getSoftTabs()
-        text = "Spaces (#{ed.getTabLength()})"
-      else
-        text = "Tabs"
-      @text?.innerText = text
+  update: ->
+    editor = atom.workspace.getActiveTextEditor()
+    if editor
+      @view.style.display = ""
+      @updateText editor
+    else
+      @view.style.display = "none"
+      @clearText()
 
-  clear: ->
+  updateText: (editor) ->
+    if editor.getSoftTabs()
+      text = "Spaces (#{editor.getTabLength()})"
+    else
+      text = "Tabs"
+    @text?.innerText = text
+
+  clearText: ->
     @text?.innerText = ""
