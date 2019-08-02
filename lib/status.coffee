@@ -21,8 +21,7 @@ module.exports =
       atom.commands.dispatch atom.views.getView(atom.workspace.getActiveTextEditor()),
        'indent-detective:choose-indent'
 
-  update: ->
-    editor = atom.workspace.getActiveTextEditor()
+  update: (editor) ->
     if editor
       @view.style.display = ""
       @updateText editor
