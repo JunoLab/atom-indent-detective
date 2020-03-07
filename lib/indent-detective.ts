@@ -136,7 +136,7 @@ function getIndent (editor :TextEditor) {
     numberOfCounts += 1
   }
   if (enableDebug) {
-    console.log(`Indent Detective report for ${editor.buffer.getBaseName()}`)
+    console.log(`Indent Detective report for ${editor.getPath()}`)
     console.log(counts)
   }
   return bestOf(counts)
