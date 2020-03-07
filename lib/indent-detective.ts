@@ -147,7 +147,7 @@ function isValidLine (row, line, editor :TextEditor) {
   if (line.match(/^\s*$/)) return false
 
   // line is part of a comment or string
-  for (const scope of editor.scopeDescriptorForBufferPosition([row, 0]).scopes) {
+  for (const scope of editor.scopeDescriptorForBufferPosition([row, 0]).getScopesArray()) {
     if (scope.indexOf('comment') > -1 ||
         scope.indexOf('docstring') > -1 ||
         scope.indexOf('string') > -1) {
