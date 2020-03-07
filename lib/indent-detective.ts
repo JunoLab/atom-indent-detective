@@ -178,13 +178,15 @@ function select () {
 
   selector.show(items, ({text, length}={}) =>{
     const editor = atom.workspace.getActiveTextEditor()
-    if (text == 'Automatic') {
-      manual.delete(editor)
-      run(editor)
-    } else {
-      setSettings(editor, length)
-      manual.add(editor)
-      status.update(editor)
+    if (editor instanceof TextEditor){ // to make sure is defined
+      if (text == 'Automatic') {
+        manual.delete(editor)
+        run(editor)
+      } else {
+        setSettings(editor, length)
+        manual.add(editor)
+        status.update(editor)
+      }
     }
   })
 }
