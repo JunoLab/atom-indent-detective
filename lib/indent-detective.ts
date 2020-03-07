@@ -71,7 +71,7 @@ export function consumeStatusBar (bar) {
   status.consumeStatusBar(bar)
 }
 
-function run (editor) {
+function run (editor :TextEditor) {
   if (editor.isDestroyed()) return
   if (!manual.has(editor)) {
     setSettings(editor, getIndent(editor))
@@ -80,7 +80,7 @@ function run (editor) {
   status.update(editor)
 }
 
-function setSettings (editor, indent) {
+function setSettings (editor :TextEditor, indent) {
   if (enableDebug) {
     console.log(`-> decided for ${indent}`)
   }
@@ -107,7 +107,7 @@ function bestOf (counts:Array<number>) {
   return best
 }
 
-function getIndent (editor) {
+function getIndent (editor :TextEditor) {
   let row = -1
   let counts: Array<number> = [];
   let previousIndent = 0
@@ -142,7 +142,7 @@ function getIndent (editor) {
   return bestOf(counts)
 }
 
-function isValidLine (row, line, editor) {
+function isValidLine (row, line, editor :TextEditor) {
   // empty line
   if (line.match(/^\s*$/)) return false
 
