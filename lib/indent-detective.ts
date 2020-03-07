@@ -92,7 +92,7 @@ function bestOf (counts) {
 
 function getIndent (editor) {
   let row = -1
-  const counts = {}
+  let counts: Array<number> = [];
   let previousIndent = 0
   let previousDiff = 0
   let numberOfCounts = 0
