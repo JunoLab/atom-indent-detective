@@ -142,7 +142,7 @@ function getIndent (editor :TextEditor) {
   return bestOf(counts)
 }
 
-function isValidLine (row, line, editor :TextEditor) {
+function isValidLine (row :number, line :string, editor :TextEditor) {
   // empty line
   if (line.match(/^\s*$/)) return false
 
@@ -158,7 +158,7 @@ function isValidLine (row, line, editor :TextEditor) {
   return true
 }
 
-function lineIndent (line) {
+function lineIndent (line :string) {
   if (line.match(/^\t+/)) {
     return 'tab'
   } else {
