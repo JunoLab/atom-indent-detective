@@ -76,11 +76,11 @@ function setSettings (editor, indent) {
   }
 }
 
-function bestOf (counts) {
-  let best = 0
-  let score = 0
   for (let vote in counts) {
     vote = parseInt(vote)
+function bestOf (counts:Array<number>) {
+  let best :number = 0
+  let score :number = 0
     if (possibleIndentations.indexOf(vote) > -1 &&
         counts[vote] > score) {
       best = vote
