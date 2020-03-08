@@ -1,5 +1,7 @@
 import { SelectListView } from 'atom-space-pen-views';
 
+// TODO: Replacing space-pen-views
+
 export default {
   show(xs, f) {
     if (this.selector == null) { this.selector = new SelectListView; }
