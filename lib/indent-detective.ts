@@ -53,7 +53,7 @@ export function activate () {
       'indent-detective:choose-indent': () => select()
     }),
     atom.config.observe('indent-detective.possibleIndentations', (opts) => {
-      possibleIndentations = opts.map(el => parseInt(el))
+      possibleIndentations = opts
     }),
     atom.config.observe('indent-detective.enableDebugMessages', (val) => {
       enableDebug = val
