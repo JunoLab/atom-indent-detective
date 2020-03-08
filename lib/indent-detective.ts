@@ -84,7 +84,7 @@ function run (editor :TextEditor) {
   status.update(editor)
 }
 
-function setSettings (editor :TextEditor, indent) {
+function setSettings (editor :TextEditor, indent :number | "tab") {
   if (enableDebug) {
     console.log(`-> decided for ${indent}`)
   }
