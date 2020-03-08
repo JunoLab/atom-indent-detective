@@ -4,10 +4,28 @@ import { CompositeDisposable, TextEditor } from 'atom'
 import status from './status'
 import selector from './selector'
 
-let possibleIndentations = []
+// TODO: Array of numbers
+let possibleIndentations :Array<number> = [];
+
 let enableDebug = false
 const manual = new Set()
-let subs
+let subs :CompositeDisposable
+
+export const config = {
+  possibleIndentations: {
+    type: 'array',
+    default: [2, 3, 4, 6, 8],
+    items: {
+      type: 'number'
+    },
+    order: 1
+  },
+  enableDebugMessages: {
+    type: 'boolean',
+    default: false,
+    order: 2
+  }
+};
 
 export function activate () {
   subs = new CompositeDisposable()
@@ -76,11 +94,10 @@ function setSettings (editor, indent) {
   }
 }
 
-  for (let vote in counts) {
-    vote = parseInt(vote)
 function bestOf (counts:Array<number>) {
   let best :number = 0
   let score :number = 0
+  for (let vote = 0; vote < counts.length; vote++) {
     if (possibleIndentations.indexOf(vote) > -1 &&
         counts[vote] > score) {
       best = vote
@@ -150,11 +167,15 @@ function lineIndent (line) {
 }
 
 function select () {
-  const items = [{text: 'Automatic'}]
+  // Array<object> template + Initial value
+  let items: Array<{ text: string, length: number | string }> = [{text: 'Automatic', length: 'auto'}];
+  // Rest of the elements
+  // TODO: array comprehension:
   for (const n of possibleIndentations) {
     items.push({text: `${n} Spaces`, length: n})
   }
   items.push({text: 'Tabs', length: 'tab'})
+
   selector.show(items, ({text, length}={}) =>{
     const editor = atom.workspace.getActiveTextEditor()
     if (text == 'Automatic') {
@@ -166,21 +187,4 @@ function select () {
       status.update(editor)
     }
   })
-}
-
-export var config = {
-  possibleIndentations: {
-    type: 'array',
-    // HACK: array of strings because settings-view is broken
-    default: ['2','3', '4', '6', '8'],
-    items: {
-      type: 'string'
-    },
-    order: 1
-  },
-  enableDebugMessages: {
-    type: 'boolean',
-    default: false,
-    order: 2
-  }
 }
