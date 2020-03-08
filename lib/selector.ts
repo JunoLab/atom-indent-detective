@@ -1,9 +1,9 @@
-import { SelectListView } from 'atom-space-pen-views';
-
 // TODO: Replacing space-pen-views
 
+import { SelectListView } from 'atom-space-pen-views';
+
 export default {
-  show(xs, f) {
+  show(xs :Array<{ text: string, length: number | string }>, f) {
     if (this.selector == null) { this.selector = new SelectListView; }
     this.selector.setItems([]);
     this.selector.storeFocusedElement();
