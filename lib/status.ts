@@ -1,3 +1,6 @@
+import {TextEditor} from "atom";
+import {StatusBar} from "atom/status-bar";
+
 export default {
   activate() {
     return this.createView();
@@ -7,7 +10,7 @@ export default {
     return (this.tile != null ? this.tile.destroy() : undefined);
   },
 
-  consumeStatusBar(bar) {
+  consumeStatusBar(bar :StatusBar) {
     this.bar = bar;
     return this.tile = this.bar.addRightTile({
       item: this.view,
@@ -27,7 +30,7 @@ export default {
     };
   },
 
-  update(editor?) {
+  update(editor? :TextEditor) {
     if (editor) {
       this.view.style.display = "";
       return this.updateText(editor);
@@ -37,7 +40,7 @@ export default {
     }
   },
 
-  updateText(editor) {
+  updateText(editor :TextEditor) {
     let text;
     if (editor.getSoftTabs()) {
       text = `Spaces (${editor.getTabLength()})`;

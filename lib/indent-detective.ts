@@ -1,6 +1,8 @@
 'use babel'
 
 import { CompositeDisposable, TextEditor } from 'atom'
+import {StatusBar} from "atom/status-bar";
+
 import status from './status'
 import selector from './selector'
 
@@ -67,7 +69,7 @@ export function deactivate () {
   status.deactivate()
 }
 
-export function consumeStatusBar (bar) {
+export function consumeStatusBar (bar :StatusBar) {
   status.consumeStatusBar(bar)
 }
 
