@@ -46,3 +46,9 @@ export function selector_show(subs: CompositeDisposable) {
                 return {} // f()!
             },
         });
+
+        // Adding SelectListView to panel
+        modalPanel = atom.workspace.addModalPanel({
+            item: indentListView
+        });
+
