@@ -171,6 +171,16 @@ function lineIndent (line :string) {
 }
 
 function select () {
+export function setIndent(editor: TextEditor, indent :IndentSetting) {
+    if (indent.text == "Automatic") {
+      manual.delete(editor)
+      run(editor)
+    } else {
+      setSettings(editor, indent.length)
+      manual.add(editor)
+      status.update(editor)
+    }
+}
 
   const possibleIndentations_length = possibleIndentations.length
 
