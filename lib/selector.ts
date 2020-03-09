@@ -15,3 +15,7 @@ export function selector_show(subs: CompositeDisposable) {
         // Defining a SelectListView with methods - https://github.com/atom/atom-select-list
         indentListView = new SelectListView({
 
+            // an array containing the objects you want to show in the select list
+            items: getItemsList(),
+
+            // called whenever an item needs to be displayed.
