@@ -1,4 +1,5 @@
 'use babel'
+
 // TODO: Converting to wasm using https://docs.assemblyscript.org/
 import { CompositeDisposable, TextEditor } from 'atom'
 import {StatusBar} from "atom/status-bar";
@@ -6,8 +7,10 @@ import {StatusBar} from "atom/status-bar";
 import status from './status'
 import {selector_show} from './selector'
 
+// type for length settings
+export type lengthSetting = number | "tab" ;
 // object to hold indent setting for one item
-export type IndentSetting = { text: string, length: number | "tab" };
+export type IndentSetting = { text: string, length: lengthSetting};
 
 let possibleIndentations :Array<number> = [];
 
@@ -79,7 +82,7 @@ function run (editor :TextEditor) {
   status.update(editor)
 }
 
-function setSettings(editor :TextEditor, length :number | "tab") {
+function setSettings(editor :TextEditor, length :lengthSetting) {
   if (enableDebug) {
     console.log(`-> decided for ${length}`)
   }
@@ -188,9 +191,9 @@ export function getItemsList() {
   // items filling
   items[0] = {text: "Automatic", length: 0};
   for (let ind = 0; ind < possibleIndentations_length; ind++) {
-    items[ind+1] = {text: `${possibleIndentations[ind]} Spaces`, length: ind};
+    items[ind+1] = {text: `${possibleIndentations[ind]} Spaces`, length: possibleIndentations[ind]};
   }
-  items[possibleIndentations_length] = {text: 'Tabs', length: 'tab'}
+  items[possibleIndentations_length+1] = {text: "Tabs", length: "tab"}
 
   return items
 }
