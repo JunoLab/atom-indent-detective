@@ -182,29 +182,21 @@ export function setIndent(editor: TextEditor, indent :IndentSetting) {
     }
 }
 
+export function getItemsList() {
+
+  possibleIndentations = atom.config.get('indent-detective.possibleIndentations')
+
   const possibleIndentations_length = possibleIndentations.length
 
   // items declaration (Array<object> template)
-  let items = new Array<{ text: string, length: number | string }>( possibleIndentations_length + 2)
+  let items = new Array<IndentSetting>( possibleIndentations_length + 2)
 
   // items filling
-  items[1] = {text: 'Automatic', length: 'auto'};
+  items[0] = {text: "Automatic", length: 0};
   for (let ind = 0; ind < possibleIndentations_length; ind++) {
     items[ind+1] = {text: `${possibleIndentations[ind]} Spaces`, length: ind};
   }
   items[possibleIndentations_length] = {text: 'Tabs', length: 'tab'}
-  
-  selector.show(items, ({text, length}={}) =>{
-    const editor = atom.workspace.getActiveTextEditor()
-    if (editor instanceof TextEditor){ // to make sure is defined
-      if (text == 'Automatic') {
-        manual.delete(editor)
-        run(editor)
-      } else {
-        setSettings(editor, length)
-        manual.add(editor)
-        status.update(editor)
-      }
-    }
-  })
+
+  return items
 }
