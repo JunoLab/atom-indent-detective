@@ -52,3 +52,12 @@ export function selector_show(subs: CompositeDisposable) {
             item: indentListView
         });
 
+        // Add disposable
+        subs.add(
+            new Disposable(function () {
+                indentListView.destroy();
+                modalPanel.destroy();
+                makeModalPanel = true;
+            })
+        );
+
