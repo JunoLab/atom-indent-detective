@@ -20,17 +20,12 @@ let subs :CompositeDisposable
 
 export const config = {
   possibleIndentations: {
-    type: 'array',
-  default: [2, 3, 4, 6, 8],
-        items: {
-      type: 'number'
-    },
+    type: "array",
+    default: [2, 3, 4, 6, 8],
+    items: {type: "number"},
+    title: "possible indentations",
+    description: 'Write possible indentations that package should consider',
     order: 1
-  },
-  enableDebugMessages: {
-    type: 'boolean',
-  default: true,
-        order: 2
   }
 }
 
