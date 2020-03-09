@@ -12,7 +12,7 @@ export type IndentSetting = { text: string, length: number | "tab" };
 let possibleIndentations :Array<number> = [];
 
 let enableDebug = false
-const manual = new Set()
+let manual = new Set()
 let subs :CompositeDisposable
 
 export const config = {
@@ -36,32 +36,27 @@ export function activate() {
   status.activate()
 
   subs.add(
-    atom.workspace.observeTextEditors((ed) => {
-      run(ed)
-      const sub = ed.onDidStopChanging(() => {
+      atom.workspace.observeTextEditors((ed) => {
         run(ed)
+        const sub = ed.onDidStopChanging(() => {
+          run(ed)
+        })
+        subs.add(ed.onDidDestroy(() => {
+          sub.dispose()
+          manual.delete(ed)
+        }))
+      }),
+      atom.workspace.onDidStopChangingActivePaneItem((item) => {
+        if (item instanceof TextEditor) {
+          run(item)
+        } else {
+          status.update()
+        }
+      }),
+
+      atom.commands.add('atom-text-editor', {
+        'indent-detective:choose-indent': function() {selector_show(subs)}
       })
-      subs.add(ed.onDidDestroy(() => {
-        sub.dispose()
-        manual.delete(ed)
-      }))
-    }),
-    atom.workspace.onDidStopChangingActivePaneItem((item) => {
-      if (item instanceof TextEditor) {
-        run(item)
-      } else {
-        status.update()
-      }
-    }),
-    atom.commands.add('atom-text-editor', {
-      'indent-detective:choose-indent': () => select()
-    }),
-    atom.config.observe('indent-detective.possibleIndentations', (opts) => {
-      possibleIndentations = opts
-    }),
-    atom.config.observe('indent-detective.enableDebugMessages', (val) => {
-      enableDebug = val
-    })
   )
 }
 
