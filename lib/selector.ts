@@ -30,3 +30,13 @@ export function selector_show(subs: CompositeDisposable) {
                 return indent.text
             },
 
+            // called when the user clicks or presses Enter on an item.
+            didConfirmSelection: function (indent: IndentSetting) {
+
+                const editor = atom.workspace.getActiveTextEditor();
+                if (editor instanceof TextEditor) {
+                    setIndent(editor, indent);
+                }
+                modalPanel.hide();
+            },
+
