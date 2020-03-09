@@ -15,7 +15,7 @@ export type IndentSetting = { text: string, length: lengthSetting};
 let possibleIndentations :Array<number> = [];
 
 let enableDebug = false
-let manual = new Set()
+let manual = new Set<TextEditor>()
 let subs :CompositeDisposable
 
 export const config = {
