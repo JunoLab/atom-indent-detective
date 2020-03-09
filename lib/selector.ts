@@ -25,3 +25,8 @@ export function selector_show(subs: CompositeDisposable) {
                 return element;
             },
 
+            // called to retrieve a string property on each item and that will be used to filter them.
+            filterKeyForItem: function (indent: IndentSetting) {
+                return indent.text
+            },
+
