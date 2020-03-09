@@ -6,6 +6,8 @@ import {StatusBar} from "atom/status-bar";
 import status from './status'
 import {selector_show} from './selector'
 
+// object to hold indent setting for one item
+export type IndentSetting = { text: string, length: number | "tab" };
 
 let possibleIndentations :Array<number> = [];
 
