@@ -19,3 +19,9 @@ export function selector_show(subs: CompositeDisposable) {
             items: getItemsList(),
 
             // called whenever an item needs to be displayed.
+            elementForItem: function (indent: IndentSetting) {
+                const element = document.createElement('li');
+                element.textContent = indent.text;
+                return element;
+            },
+
