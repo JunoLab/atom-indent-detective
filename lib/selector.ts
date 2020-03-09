@@ -1,14 +1,20 @@
-/// <reference path="../types/atom-select-list.d.ts"/>
-import {SelectListView} from 'atom-select-list';
+// import SelectListView from  'atom-select-list'
+const SelectListView = require('atom-select-list')
+
+// TODO: better ways for typescript (but don't work now)
+/// /!/ <reference path="../types/atom-select-list.d.ts"/>
+// import {SelectListView} from 'atom-select-list';
+// import {SelectList as SelectListView} from 'atom-select-list'
 
 import {TextEditor, CompositeDisposable, Panel, Disposable} from 'atom';
 import {IndentSetting, setIndent, getItemsList} from './indent-detective';
-export function selector_show(subs: CompositeDisposable) {
 
+
+export function selector_show(subs: CompositeDisposable) {
 
     let makeModalPanel :boolean = true
     let modalPanel: Panel
-    let indentListView :SelectListView
+    let indentListView
 
     if (makeModalPanel) {
 
