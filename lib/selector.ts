@@ -5,7 +5,7 @@ import {TextEditor, CompositeDisposable, Panel, Disposable} from 'atom';
 import {IndentSetting, setIndent, getItemsList} from './indent-detective';
 export function selector_show(subs: CompositeDisposable) {
 
-    
+
     let makeModalPanel :boolean = true
     let modalPanel: Panel
     let indentListView :SelectListView
