@@ -40,3 +40,9 @@ export function selector_show(subs: CompositeDisposable) {
                 modalPanel.hide();
             },
 
+            // called when the user presses Esc or the list loses focus.
+            didCancelSelection: function () {
+                modalPanel.hide();
+                return {} // f()!
+            },
+        });
