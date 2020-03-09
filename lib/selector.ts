@@ -61,3 +61,9 @@ export function selector_show(subs: CompositeDisposable) {
             })
         );
 
+        // Show selector
+        indentListView.reset();
+        modalPanel.show();
+        indentListView.focus();
+    }
+}
