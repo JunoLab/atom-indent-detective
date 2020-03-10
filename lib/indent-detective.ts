@@ -12,7 +12,7 @@ export type lengthSetting = number | "tab" ;
 // object to hold indent setting for one item
 export type IndentSetting = { text: string, length: lengthSetting};
 
-let possibleIndentations :Array<number> = [];
+let possibleIndentations :Array<number>
 
 let enableDebug = false
 let manual = new Set<TextEditor>()
