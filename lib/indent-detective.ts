@@ -19,10 +19,11 @@ let manual = new Set<TextEditor>()
 let subs :CompositeDisposable
 
 export const config = {
-  possibleIndentations: {
+  // HACK: Array of strings because of Atom's setting issue (settings-view)
+  possibleIndentations_str: {
     type: "array",
-    default: [2, 3, 4, 6, 8],
-    items: {type: "number"},
+    default: ["2", "3", "4", "6", "8"],
+    items: {type: "string"},
     title: "possible indentations",
     description: 'Write possible indentations that package should consider',
     order: 1
@@ -176,7 +177,8 @@ export function setIndent(editor: TextEditor, indent :IndentSetting) {
 
 export function getItemsList() {
 
-  possibleIndentations = atom.config.get('indent-detective.possibleIndentations')
+  possibleIndentations = atom.config.get('indent-detective.possibleIndentations_str')
+                            .map(function (el :string) {return parseInt(el)}) // because of the HACK
 
   const possibleIndentations_length = possibleIndentations.length
 
