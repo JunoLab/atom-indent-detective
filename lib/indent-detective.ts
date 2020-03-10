@@ -4,7 +4,7 @@
 import { CompositeDisposable, TextEditor } from 'atom'
 import {StatusBar} from "atom/status-bar";
 
-import status from './status'
+import {IndentStatusItem} from './status'
 import {selector_show} from './selector'
 
 // type for length settings
@@ -13,10 +13,10 @@ export type lengthSetting = number | "tab" ;
 export type IndentSetting = { text: string, length: lengthSetting};
 
 let possibleIndentations :Array<number>
-
-let enableDebug = false
+const enableDebug = false
 let manual = new Set<TextEditor>()
 let subs :CompositeDisposable
+let statusItem :IndentStatusItem | undefined // undefined when statusbar isn't consumed
 
 export const config = {
   // HACK: Array of strings because of Atom's setting issue (settings-view)
@@ -32,24 +32,28 @@ export const config = {
 
 export function activate() {
   subs = new CompositeDisposable()  // subscriptions
-  status.activate()
 
   subs.add(
-      atom.workspace.observeTextEditors((ed) => {
-        run(ed)
-        const sub = ed.onDidStopChanging(() => {
-          run(ed)
+
+      // Called for every TextEditor opening/closing
+      atom.workspace.observeTextEditors(function(editor :TextEditor) {
+        run(editor)
+        const sub = editor.onDidStopChanging(() => {
+          run(editor)
         })
-        subs.add(ed.onDidDestroy(() => {
+        subs.add(editor.onDidDestroy(() => {
           sub.dispose()
-          manual.delete(ed)
+          manual.delete(editor)
         }))
       }),
+
       atom.workspace.onDidStopChangingActivePaneItem((item) => {
         if (item instanceof TextEditor) {
           run(item)
         } else {
-          status.update()
+          if (statusItem != undefined) {
+            statusItem.updateDisplay()
+          }
         }
       }),
 
@@ -62,20 +66,28 @@ export function activate() {
 export function deactivate() {
   subs.dispose()
   manual.clear()
-  status.deactivate()
+  if (statusItem != undefined) { // if doesn't exist yet
+    statusItem.destroy()
+  }
 }
 
+// Called only once for each Atom session
 export function consumeStatusBar(bar :StatusBar) {
-  status.consumeStatusBar(bar)
+  statusItem = new IndentStatusItem()
+  statusItem.consumeStatusBar(bar)
 }
 
+// Runs for every TextEditor opening/closing
 function run (editor :TextEditor) {
-  if (editor.isDestroyed()) return
+  if (editor.isDestroyed()) {
+    return
+  }
   if (!manual.has(editor)) {
     setSettings(editor, getIndent(editor))
   }
-
-  status.update(editor)
+  if (statusItem != undefined) { // Initially may be undefined (activate() called before consumeStatusBar())
+    statusItem.updateDisplay(editor)
+  }
 }
 
 function setSettings(editor :TextEditor, length :lengthSetting) {
@@ -171,7 +183,9 @@ export function setIndent(editor: TextEditor, indent :IndentSetting) {
     } else {
       setSettings(editor, indent.length)
       manual.add(editor)
-      status.update(editor)
+      if (statusItem != undefined) {
+        statusItem.updateDisplay(editor)
+      }
     }
 }
 
