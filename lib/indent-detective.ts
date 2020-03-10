@@ -32,6 +32,8 @@ export const config = {
 
 export function activate() {
   subs = new CompositeDisposable()  // subscriptions
+  possibleIndentations = atom.config.get('indent-detective.possibleIndentations_str')
+      .map(function (el :string) {return parseInt(el)}) // because of the HACK
 
   subs.add(
 
@@ -200,9 +202,6 @@ export function setIndent(editor: TextEditor, indent :IndentSetting) {
 }
 
 export function getItemsList() {
-
-  possibleIndentations = atom.config.get('indent-detective.possibleIndentations_str')
-                            .map(function (el :string) {return parseInt(el)}) // because of the HACK
 
   const possibleIndentations_length = possibleIndentations.length
 
