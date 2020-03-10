@@ -129,6 +129,10 @@ function getIndent(editor :TextEditor) {
     if (!isValidLine(row, line, editor)) continue
     const indent = lineIndent(line)
 
+    if (indent == null) { // TODO do we need this?
+      continue
+    }
+
     if (indent == 'tab') return 'tab'
     const diff = Math.abs(indent - previousIndent)
 
@@ -172,7 +176,13 @@ function lineIndent(line :string) {
   if (line.match(/^\t+/)) {
     return "tab"
   } else {
-    return line.match(/^([ ]*)/)[0].length
+    let match = line.match(/^([ ]*)/)
+    // TODO: do we need checking?
+    if (match) {
+      return match[0].length
+    } else {
+      return null
+    }
   }
 }
 
