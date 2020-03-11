@@ -13,7 +13,9 @@
     "atom-space-pen-views": "^2.0.0"
   },
   "devDependencies": {
-    "@types/atom": "^1.40.1"
+    "@types/atom": "^1.40.1",
+    "typescript": "^3.8.3",
+    "tslint": "^6.1.0"
   },
   "consumedServices": {
     "status-bar": {
@@ -22,13 +24,9 @@
       }
     }
   },
-  "babel": {
-    "presets": ["@babel/typescript"],
-    "plugins": [
-      "@babel/proposal-class-properties",
-      "@babel/proposal-object-rest-spread",
-      "@babel/plugin-transform-runtime"
-    ],
-    "ignore": ["node_modules", "src/test"]
+  "prettier": {
+    "semi": false,
+    "printWidth": 110,
+    "tabWidth": 4
   }
 }

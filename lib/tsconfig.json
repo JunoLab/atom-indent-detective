@@ -3,7 +3,7 @@
     //// Linting Options - Uncomment options to get more features (usually more restrictive)
     // "strict": true,
     "strictNullChecks": true,
-    //    "forceConsistentCasingInFileNames": true,
+    // "forceConsistentCasingInFileNames": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
@@ -20,21 +20,16 @@
     // "preserveConstEnums": true,
     "sourceMap": true,
     "preserveSymlinks": true,
-    "removeComments": true,
-
-
-//    "jsx": "react",
-//    "jsxFactory": "etch.dom",
-    "lib": [
-      "ES2018",
-      "dom"
-    ],
+    // "removeComments": true,
+    // "jsx": "react",
+    // "jsxFactory": "etch.dom",
+    "lib": ["ES2018", "dom"],
     "target": "ES2018",
     "module": "commonjs",
     "moduleResolution": "node",
-//    "noLib": false,
-//    "importHelpers": true, // if true you should add tslib to deps
-//    "skipLibCheck": false,
+    // "noLib": false,
+    // "importHelpers": true, // if true you should add tslib to deps
+    // "skipLibCheck": false,
 
     "outDir": "../dist"
   },
