@@ -1,6 +1,8 @@
 // import SelectListView from  'atom-select-list'
 const SelectListView = require('atom-select-list')
 
+// TODO: observe https://github.com/atom/atom-select-list/pull/28/files
+
 // TODO: better ways for typescript (but don't work now)
 /// /!/ <reference path="../types/atom-select-list.d.ts"/>
 // import {SelectListView} from 'atom-select-list'
