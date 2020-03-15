@@ -30,7 +30,7 @@ export class IndentStatusItem {
         this.view.appendChild(this.text)
 
         this.view.onclick = function () {
-            let editor = atom.workspace.getActiveTextEditor()
+            const editor = atom.workspace.getActiveTextEditor()
             if (editor) {
                 atom.commands.dispatch(atom.views.getView(editor), 'indent-detective:choose-indent')
             } // else do nothing

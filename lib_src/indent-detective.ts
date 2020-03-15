@@ -18,7 +18,7 @@ let possibleIndentations: Array<number>
 export let SelectorItems :Array<IndentSetting>
 
 const enableDebug = false
-let manual = new Set<TextEditor>()
+const manual = new Set<TextEditor>()
 let subs: CompositeDisposable
 let statusItem: IndentStatusItem | undefined // undefined when statusbar isn't consumed
 
@@ -133,7 +133,7 @@ function bestOf(counts: Array<number>) {
 
 function getIndent(editor: TextEditor) {
     let row = -1
-    let counts: Array<number> = []
+    const counts: Array<number> = []
     let previousIndent = 0
     let previousDiff = 0
     let numberOfCounts = 0
@@ -191,7 +191,7 @@ function lineIndent(line: string) {
     if (line.match(/^\t+/)) {
         return "tab"
     } else {
-        let match = line.match(/^([ ]*)/)
+        const match = line.match(/^([ ]*)/)
         // TODO: do we need checking?
         if (match) {
             return match[0].length
@@ -220,7 +220,7 @@ function getItemsList() {
     const possibleIndentations_length = possibleIndentations.length
 
     // items declaration (Array<object> template)
-    let items = new Array<IndentSetting>(possibleIndentations_length + 2)
+    const items = new Array<IndentSetting>(possibleIndentations_length + 2)
 
     // items filling
     items[0] = {text: "Automatic", length: 0}
