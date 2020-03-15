@@ -40,7 +40,7 @@ export function activate() {
     // Getting possibleIndentations from config
     possibleIndentations = atom.config.get('indent-detective.possibleIndentations_str')
         .map(function (el: string) {
-            return parseInt(el)
+            return parseInt(el, 10)
         }) // because of the HACK
 
     // Calculating SelectorItems
