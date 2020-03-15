@@ -137,7 +137,8 @@ function getIndent(editor: TextEditor) {
     let previousIndent = 0
     let previousDiff = 0
     let numberOfCounts = 0
-    for (const line of editor.getBuffer().getLines()) {
+    const editorLines = editor.getBuffer().getLines()
+    for (const line of editorLines) {
         if (numberOfCounts > 150) break
         row += 1
         if (!isValidLine(row, line, editor)) continue
