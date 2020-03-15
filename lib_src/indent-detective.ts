@@ -56,6 +56,8 @@ export function activate() {
     subs.add(
         // Called for every TextEditor opening/closing
         atom.workspace.observeTextEditors(function (editor: TextEditor) {
+            // ti_run = window.performance.now()
+
             run(editor)
             const sub = editor.onDidStopChanging(() => {
                 run(editor)
@@ -64,6 +66,9 @@ export function activate() {
                 sub.dispose()
                 manual.delete(editor)
             }))
+
+            // tf_run = window.performance.now()
+            // console.log("indent detective run  "+ (tf_run-ti_run) + "  ms")
         }),
 
         atom.workspace.onDidStopChangingActivePaneItem((item) => {
@@ -82,6 +87,9 @@ export function activate() {
             }
         })
     )
+
+    // tf_activate = window.performance.now()
+    // console.log("indent detective activation  "+ (tf_activate - ti_activate) + "  ms")
 }
 
 export function deactivate() {
