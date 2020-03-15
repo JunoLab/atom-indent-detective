@@ -13,7 +13,10 @@ export type lengthSetting = number | "tab"
 // object to hold indent setting for one item
 export type IndentSetting = { text: string, length: lengthSetting }
 
+// TODO: make these two const
 let possibleIndentations: Array<number>
+export let SelectorItems :Array<IndentSetting>
+
 const enableDebug = false
 let manual = new Set<TextEditor>()
 let subs: CompositeDisposable
@@ -26,17 +29,22 @@ export const config = {
         default: ["2", "3", "4", "6", "8"],
         items: {type: "string"},
         title: "possible indentations",
-        description: 'Write possible indentations that package should consider',
+        description: 'Write possible indentations that package should consider (changing requires Atom\'s restart/reload)',
         order: 1
     }
 }
 
 export function activate() {
     subs = new CompositeDisposable()  // subscriptions
+
+    // Getting possibleIndentations from config
     possibleIndentations = atom.config.get('indent-detective.possibleIndentations_str')
         .map(function (el: string) {
             return parseInt(el)
         }) // because of the HACK
+
+    // Calculating SelectorItems
+    SelectorItems = getItemsList()
 
     subs.add(
         // Called for every TextEditor opening/closing
@@ -205,7 +213,8 @@ export function setIndent(editor: TextEditor, indent: IndentSetting) {
     }
 }
 
-export function getItemsList() {
+// Called only once in activate to calculate SelectorItems
+function getItemsList() {
 
     const possibleIndentations_length = possibleIndentations.length
 
@@ -219,5 +228,5 @@ export function getItemsList() {
     }
     items[possibleIndentations_length + 1] = {text: "Tabs", length: "tab"}
 
-    return items
+    return items // SelectorItems
 }

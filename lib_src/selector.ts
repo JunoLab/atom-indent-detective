@@ -9,7 +9,7 @@ const SelectListView = require('atom-select-list')
 // import {SelectList as SelectListView} from 'atom-select-list'
 
 import {TextEditor, CompositeDisposable, Panel, Disposable} from 'atom'
-import {IndentSetting, setIndent, getItemsList} from './indent-detective'
+import {IndentSetting, setIndent, SelectorItems} from './indent-detective'
 
 
 export function selector_show(subs: CompositeDisposable) {
@@ -24,7 +24,7 @@ export function selector_show(subs: CompositeDisposable) {
         indentListView = new SelectListView({
 
             // an array containing the objects you want to show in the select list
-            items: getItemsList(),
+            items: SelectorItems,
 
             // called whenever an item needs to be displayed.
             elementForItem: function (indent: IndentSetting) {
