@@ -63,7 +63,7 @@ export function activate() {
             if (item instanceof TextEditor) {
                 run(item)
             } else {
-                if (statusItem != undefined) {
+                if (statusItem !== undefined) {
                     statusItem.updateDisplay()
                 }
             }
@@ -80,7 +80,7 @@ export function activate() {
 export function deactivate() {
     subs.dispose()
     manual.clear()
-    if (statusItem != undefined) { // if doesn't exist yet
+    if (statusItem !== undefined) { // if doesn't exist yet
         statusItem.destroy()
     }
 }
@@ -99,7 +99,7 @@ function run(editor: TextEditor) {
     if (!manual.has(editor)) {
         setSettings(editor, getIndent(editor))
     }
-    if (statusItem != undefined) { // Initially may be undefined (activate() called before consumeStatusBar())
+    if (statusItem !== undefined) { // Initially may be undefined (activate() called before consumeStatusBar())
         statusItem.updateDisplay(editor)
     }
 }
@@ -108,9 +108,9 @@ function setSettings(editor: TextEditor, length: lengthSetting) {
     if (enableDebug) {
         console.log(`-> decided for ${length}`)
     }
-    if (length == 0) return // default settings
+    if (length === 0) return // default settings
 
-    if (length == "tab") {
+    if (length === "tab") {
         editor.setSoftTabs(false)
     } else if (length >= Math.min(...possibleIndentations) && length <= Math.max(...possibleIndentations)) {
         editor.setSoftTabs(true)
@@ -148,11 +148,11 @@ function getIndent(editor: TextEditor) {
             continue
         }
 
-        if (indent == 'tab') return 'tab'
+        if (indent === 'tab') return 'tab'
         const diff = Math.abs(indent - previousIndent)
 
-        if (diff == 0) {
-            if (previousDiff != 0 && indent != 0) {
+        if (diff === 0) {
+            if (previousDiff !== 0 && indent !== 0) {
                 counts[previousDiff] += 1
             }
         } else {
@@ -202,13 +202,13 @@ function lineIndent(line: string) {
 }
 
 export function setIndent(editor: TextEditor, indent: IndentSetting) {
-    if (indent.text == "Automatic") {
+    if (indent.text === "Automatic") {
         manual.delete(editor)
         run(editor)
     } else {
         setSettings(editor, indent.length)
         manual.add(editor)
-        if (statusItem != undefined) {
+        if (statusItem !== undefined) {
             statusItem.updateDisplay(editor)
         }
     }
