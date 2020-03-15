@@ -14,7 +14,7 @@ import {IndentSetting, setIndent, SelectorItems} from './indent-detective'
 
 export function selector_show(subs: CompositeDisposable) {
 
-    let makeModalPanel: boolean = true
+    let makeModalPanel = true
     let modalPanel: Panel
     let indentListView
 
@@ -27,19 +27,19 @@ export function selector_show(subs: CompositeDisposable) {
             items: SelectorItems,
 
             // called whenever an item needs to be displayed.
-            elementForItem: function (indent: IndentSetting) {
+            elementForItem (indent: IndentSetting) {
                 const element = document.createElement('li')
                 element.textContent = indent.text
                 return element
             },
 
             // called to retrieve a string property on each item and that will be used to filter them.
-            filterKeyForItem: function (indent: IndentSetting) {
+            filterKeyForItem (indent: IndentSetting) {
                 return indent.text
             },
 
             // called when the user clicks or presses Enter on an item.
-            didConfirmSelection: function (indent: IndentSetting) {
+            didConfirmSelection (indent: IndentSetting) {
 
                 const editor = atom.workspace.getActiveTextEditor()
                 if (editor instanceof TextEditor) {
@@ -49,7 +49,7 @@ export function selector_show(subs: CompositeDisposable) {
             },
 
             // called when the user presses Esc or the list loses focus.
-            didCancelSelection: function () {
+            didCancelSelection () {
                 modalPanel.hide()
                 return {} // f()!
             },

@@ -1,6 +1,13 @@
-'use babel'
-
 // TODO: Converting to wasm using https://docs.assemblyscript.org/
+
+/*
+// For Benchmark:
+let ti_activate = window.performance.now() // start parsing
+let tf_activate: number // finished activating
+let ti_run: number // start running
+let tf_run: number // finished running
+*/
+
 
 import {CompositeDisposable, TextEditor} from 'atom'
 import {StatusBar} from "atom/status-bar"
@@ -15,7 +22,7 @@ export type IndentSetting = { text: string, length: lengthSetting }
 
 // TODO: make these two const
 let possibleIndentations: Array<number>
-export let SelectorItems :Array<IndentSetting>
+export let SelectorItems: Array<IndentSetting>
 
 const enableDebug = false
 const manual = new Set<TextEditor>()
@@ -70,7 +77,7 @@ export function activate() {
         }),
 
         atom.commands.add('atom-text-editor', {
-            'indent-detective:choose-indent': function () {
+            'indent-detective:choose-indent' () {
                 selector_show(subs)
             }
         })
@@ -119,8 +126,8 @@ function setSettings(editor: TextEditor, length: lengthSetting) {
 }
 
 function bestOf(counts: Array<number>) {
-    let best: number = 0
-    let score: number = 0
+    let best = 0
+    let score = 0
     for (let vote = 0; vote < counts.length; vote++) {
         if (possibleIndentations.indexOf(vote) > -1 &&
             counts[vote] > score) {
