@@ -24,7 +24,7 @@ export type IndentSetting = { text: string, length: lengthSetting }
 let possibleIndentations: Array<number>
 export let SelectorItems: Array<IndentSetting>
 
-const enableDebug = false
+// const enableDebug = false
 const manual = new Set<TextEditor>()
 let subs: CompositeDisposable
 let statusItem: IndentStatusItem | undefined // undefined when statusbar isn't consumed
@@ -120,9 +120,9 @@ function run(editor: TextEditor) {
 }
 
 function setSettings(editor: TextEditor, length: lengthSetting) {
-    if (enableDebug) {
-        console.log(`-> decided for ${length}`)
-    }
+    // if (enableDebug) {
+    //     console.log(`-> decided for ${length}`)
+    // }
     if (length === 0) return // default settings
 
     if (length === "tab") {
@@ -179,10 +179,10 @@ function getIndent(editor: TextEditor) {
         previousIndent = indent
         numberOfCounts += 1
     }
-    if (enableDebug) {
-        console.log(`Indent Detective report for ${editor.getPath()}`)
-        console.log(counts)
-    }
+    // if (enableDebug) {
+    //     console.log(`Indent Detective report for ${editor.getPath()}`)
+    //     console.log(counts)
+    // }
     return bestOf(counts)
 }
 
