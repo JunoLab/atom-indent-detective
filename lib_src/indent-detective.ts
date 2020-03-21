@@ -8,17 +8,16 @@ let ti_run: number // start running
 let tf_run: number // finished running
 */
 
+import { CompositeDisposable, TextEditor } from "atom"
+import { StatusBar } from "atom/status-bar"
 
-import {CompositeDisposable, TextEditor} from 'atom'
-import {StatusBar} from "atom/status-bar"
-
-import {IndentStatusItem} from './status'
-import {selector_show} from './selector'
+import { IndentStatusItem } from "./status"
+import { selector_show } from "./selector"
 
 // type for length settings
 export type lengthSetting = number | "tab"
 // object to hold indent setting for one item
-export type IndentSetting = { text: string, length: lengthSetting }
+export type IndentSetting = { text: string; length: lengthSetting }
 
 // TODO: make these two const
 let possibleIndentations: Array<number>
@@ -34,19 +33,21 @@ export const config = {
     possibleIndentations_str: {
         type: "array",
         default: ["2", "3", "4", "6", "8"],
-        items: {type: "string"},
+        items: { type: "string" },
         title: "possible indentations",
-        description: 'Write possible indentations that package should consider (changing requires Atom\'s restart/reload)',
+        description:
+            "Write possible indentations that package should consider (changing requires Atom's restart/reload)",
         order: 1
     }
 }
 
 export function activate() {
-    subs = new CompositeDisposable()  // subscriptions
+    subs = new CompositeDisposable() // subscriptions
 
     // Getting possibleIndentations from config
-    possibleIndentations = atom.config.get('indent-detective.possibleIndentations_str')
-        .map(function (el: string) {
+    possibleIndentations = atom.config
+        .get("indent-detective.possibleIndentations_str")
+        .map(function(el: string) {
             return parseInt(el, 10)
         }) // because of the HACK
 
@@ -55,23 +56,25 @@ export function activate() {
 
     subs.add(
         // Called for every TextEditor opening/closing
-        atom.workspace.observeTextEditors(function (editor: TextEditor) {
+        atom.workspace.observeTextEditors(function(editor: TextEditor) {
             // ti_run = window.performance.now()
 
             run(editor)
             const sub = editor.onDidStopChanging(() => {
                 run(editor)
             })
-            subs.add(editor.onDidDestroy(() => {
-                sub.dispose()
-                manual.delete(editor)
-            }))
+            subs.add(
+                editor.onDidDestroy(() => {
+                    sub.dispose()
+                    manual.delete(editor)
+                })
+            )
 
             // tf_run = window.performance.now()
             // console.log("indent detective run  "+ (tf_run-ti_run) + "  ms")
         }),
 
-        atom.workspace.onDidStopChangingActivePaneItem((item) => {
+        atom.workspace.onDidStopChangingActivePaneItem(item => {
             if (item instanceof TextEditor) {
                 run(item)
             } else {
@@ -81,8 +84,8 @@ export function activate() {
             }
         }),
 
-        atom.commands.add('atom-text-editor', {
-            'indent-detective:choose-indent' () {
+        atom.commands.add("atom-text-editor", {
+            "indent-detective:choose-indent"() {
                 selector_show(subs)
             }
         })
@@ -95,7 +98,8 @@ export function activate() {
 export function deactivate() {
     subs.dispose()
     manual.clear()
-    if (statusItem !== undefined) { // if doesn't exist yet
+    if (statusItem !== undefined) {
+        // if doesn't exist yet
         statusItem.destroy()
     }
 }
@@ -114,7 +118,8 @@ function run(editor: TextEditor) {
     if (!manual.has(editor)) {
         setSettings(editor, getIndent(editor))
     }
-    if (statusItem !== undefined) { // Initially may be undefined (activate() called before consumeStatusBar())
+    if (statusItem !== undefined) {
+        // Initially may be undefined (activate() called before consumeStatusBar())
         statusItem.updateDisplay(editor)
     }
 }
@@ -137,8 +142,7 @@ function bestOf(counts: Array<number>) {
     let best = 0
     let score = 0
     for (let vote = 0; vote < counts.length; vote++) {
-        if (possibleIndentations.indexOf(vote) > -1 &&
-            counts[vote] > score) {
+        if (possibleIndentations.indexOf(vote) > -1 && counts[vote] > score) {
             best = vote
             score = counts[vote]
         }
@@ -159,11 +163,12 @@ function getIndent(editor: TextEditor) {
         if (!isValidLine(row, line, editor)) continue
         const indent = lineIndent(line)
 
-        if (indent == null) { // TODO do we need this?
+        if (indent == null) {
+            // TODO do we need this?
             continue
         }
 
-        if (indent === 'tab') return 'tab'
+        if (indent === "tab") return "tab"
         const diff = Math.abs(indent - previousIndent)
 
         if (diff === 0) {
@@ -192,9 +197,11 @@ function isValidLine(row: number, line: string, editor: TextEditor) {
 
     // line is part of a comment or string
     for (const scope of editor.scopeDescriptorForBufferPosition([row, 0]).getScopesArray()) {
-        if (scope.indexOf('comment') > -1 ||
-            scope.indexOf('docstring') > -1 ||
-            scope.indexOf('string') > -1) {
+        if (
+            scope.indexOf("comment") > -1 ||
+            scope.indexOf("docstring") > -1 ||
+            scope.indexOf("string") > -1
+        ) {
             return false
         }
     }
@@ -231,18 +238,17 @@ export function setIndent(editor: TextEditor, indent: IndentSetting) {
 
 // Called only once in activate to calculate SelectorItems
 function getItemsList() {
-
     const possibleIndentations_length = possibleIndentations.length
 
     // items declaration (Array<object> template)
     const items = new Array<IndentSetting>(possibleIndentations_length + 2)
 
     // items filling
-    items[0] = {text: "Automatic", length: 0}
+    items[0] = { text: "Automatic", length: 0 }
     for (let ind = 0; ind < possibleIndentations_length; ind++) {
-        items[ind + 1] = {text: `${possibleIndentations[ind]} Spaces`, length: possibleIndentations[ind]}
+        items[ind + 1] = { text: `${possibleIndentations[ind]} Spaces`, length: possibleIndentations[ind] }
     }
-    items[possibleIndentations_length + 1] = {text: "Tabs", length: "tab"}
+    items[possibleIndentations_length + 1] = { text: "Tabs", length: "tab" }
 
     return items // SelectorItems
 }

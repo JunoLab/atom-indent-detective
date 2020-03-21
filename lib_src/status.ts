@@ -1,5 +1,5 @@
-import {TextEditor} from "atom"
-import {StatusBar, Tile} from "atom/status-bar"
+import { TextEditor } from "atom"
+import { StatusBar, Tile } from "atom/status-bar"
 
 export class IndentStatusItem {
     bar: StatusBar
@@ -15,24 +15,24 @@ export class IndentStatusItem {
     // Called only once for one session
     consumeStatusBar(bar: StatusBar) {
         this.bar = bar
-        return this.tile = this.bar.addRightTile({
+        return (this.tile = this.bar.addRightTile({
             item: this.view,
             priority: 10.5
-        })
+        }))
     }
 
     // Called only once for one session
     createView() {
-        this.view = document.createElement('span')
-        this.view.classList.add('indent-status', 'inline-block')
-        this.text = document.createElement('a')
+        this.view = document.createElement("span")
+        this.view.classList.add("indent-status", "inline-block")
+        this.text = document.createElement("a")
         this.text.innerText = "Spaces (2)"
         this.view.appendChild(this.text)
 
-        this.view.onclick = function () {
+        this.view.onclick = function() {
             const editor = atom.workspace.getActiveTextEditor()
             if (editor) {
-                atom.commands.dispatch(atom.views.getView(editor), 'indent-detective:choose-indent')
+                atom.commands.dispatch(atom.views.getView(editor), "indent-detective:choose-indent")
             } // else do nothing
         }
 
@@ -61,16 +61,16 @@ export class IndentStatusItem {
         } else {
             text = "Tabs"
         }
-        return (this.text != null ? this.text.innerText = text : undefined)
+        return this.text != null ? (this.text.innerText = text) : undefined
     }
 
     // Called from updateDisplay
     clearText() {
-        return (this.text != null ? this.text.innerText = "" : undefined)
+        return this.text != null ? (this.text.innerText = "") : undefined
     }
 
     // Destroy when package is deactivated
     destroy() {
-        return (this.tile != null ? this.tile.destroy() : undefined)
+        return this.tile != null ? this.tile.destroy() : undefined
     }
 }
