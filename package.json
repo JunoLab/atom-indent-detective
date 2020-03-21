@@ -15,6 +15,12 @@
   "devDependencies": {
     "@types/atom": "^1.40.1",
     "typescript": "^3.8.3",
+    "eslint": "latest",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "eslint-plugin-json": "latest",
+    "eslint-plugin-only-warn": "latest",
+    "prettier": "latest",
     "tslint": "^6.1.0",
     "tslint-config-prettier": "^1.18.0"
   },
