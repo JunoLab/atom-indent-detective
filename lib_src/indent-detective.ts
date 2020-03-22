@@ -150,7 +150,7 @@ function setSettings(editor: TextEditor, length: lengthSetting) {
 function bestOf(counts: Array<number>) {
     let best = 0
     let score = 0
-    for (let vote = 0; vote < counts.length; vote++) {
+    for (let vote = 0, countslength = counts.length; vote < countslength; vote++) {
         if (possibleIndentations.indexOf(vote) > -1 && counts[vote] > score) {
             best = vote
             score = counts[vote]
