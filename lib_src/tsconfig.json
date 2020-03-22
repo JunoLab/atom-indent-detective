@@ -18,7 +18,7 @@
     "experimentalDecorators": true,
     "incremental": true,
     // "preserveConstEnums": true,
-    "sourceMap": true,
+    // "sourceMap": true,
     "preserveSymlinks": true,
     // "removeComments": true,
     // "jsx": "react",
