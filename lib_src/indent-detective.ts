@@ -205,7 +205,8 @@ function isValidLine(row: number, line: string, editor: TextEditor) {
     if (line.match(/^\s*$/)) return false
 
     // line is part of a comment or string
-    for (const scope of editor.scopeDescriptorForBufferPosition([row, 0]).getScopesArray()) {
+    const scopes = editor.scopeDescriptorForBufferPosition([row, 0]).getScopesArray()
+    for (const scope of scopes) {
         if (
             scope.indexOf("comment") > -1 ||
             scope.indexOf("docstring") > -1 ||
