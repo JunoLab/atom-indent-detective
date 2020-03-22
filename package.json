@@ -6,6 +6,14 @@
   "keywords": [],
   "repository": "https://github.com/JunoLab/atom-indent-detective",
   "license": "MIT",
+  "scripts": {
+    "typescript": "tsc -p ./lib_src/tsconfig.json",
+    "prettier_src": "prettier --write ./lib_src/**/*.ts",
+    "prettier_out": "prettier --write ./lib/**/*.js",
+    "babel": "babel lib --out-dir lib",
+    "lint": "eslint . --ext js,ts,json",
+    "build": "npm run typescript -s & npm run babel -s && npm run prettier_out -s"
+  },
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
