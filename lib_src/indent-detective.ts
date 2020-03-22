@@ -41,6 +41,9 @@ export const config = {
 }
 
 export function activate() {
+    let selectorDisposable: Disposable
+    let selector: Selector
+
     subs = new CompositeDisposable() // subscriptions
 
     // Getting possibleIndentations from config
@@ -82,7 +85,17 @@ export function activate() {
 
         atom.commands.add("atom-text-editor", {
             "indent-detective:choose-indent"() {
-                selector_show(subs)
+                // Initiating Selector object - called only once when `choose-indent` is called
+                if (!selectorDisposable) {
+                    // make a Selector object
+                    selector = new Selector(getItemsList())
+
+                    // Add disposable for selector
+                    selectorDisposable = new Disposable(() => selector.dispose())
+                    subs.add(selectorDisposable)
+                }
+
+                selector.show()
             }
         })
     )
