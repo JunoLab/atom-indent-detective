@@ -8,20 +8,19 @@ let ti_run: number // start running
 let tf_run: number // finished running
 */
 
-import { CompositeDisposable, TextEditor } from "atom"
+import { CompositeDisposable, Disposable, TextEditor } from "atom"
 import { StatusBar } from "atom/status-bar"
 
 import { IndentStatusItem } from "./status"
-import { selector_show } from "./selector"
+import { Selector } from "./selector"
 
 // type for length settings
 export type lengthSetting = number | "tab"
 // object to hold indent setting for one item
 export type IndentSetting = { text: string; length: lengthSetting }
 
-// TODO: make these two const
+// TODO: make it const
 let possibleIndentations: Array<number>
-export let SelectorItems: Array<IndentSetting>
 
 // const enableDebug = false
 const manual = new Set<TextEditor>()
@@ -50,9 +49,6 @@ export function activate() {
         .map(function(el: string) {
             return parseInt(el, 10)
         }) // because of the HACK
-
-    // Calculating SelectorItems
-    SelectorItems = getItemsList()
 
     subs.add(
         // Called for every TextEditor opening/closing
@@ -236,7 +232,7 @@ export function setIndent(editor: TextEditor, indent: IndentSetting) {
     }
 }
 
-// Called only once in activate to calculate SelectorItems
+// calculate SelectorItems (called once in activate)
 function getItemsList() {
     const possibleIndentations_length = possibleIndentations.length
 
