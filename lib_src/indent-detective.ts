@@ -22,7 +22,7 @@ export type IndentSetting = { text: string; length: lengthSetting }
 // TODO: make it const
 let possibleIndentations: Array<number>
 
-// const enableDebug = false
+let enableDebug: boolean
 const manual = new Set<TextEditor>()
 let subs: CompositeDisposable
 let statusItem: IndentStatusItem | undefined // undefined when statusbar isn't consumed
@@ -37,6 +37,11 @@ export const config = {
         description:
             "Write possible indentations that package should consider (changing requires Atom's restart/reload)",
         order: 1
+    },
+    enableDebugMessages: {
+        type: 'boolean',
+        default: false,
+        order: 2
     }
 }
 
@@ -52,6 +57,8 @@ export function activate() {
         .map(function(el: string) {
             return parseInt(el, 10)
         }) // because of the HACK
+
+    enableDebug = atom.config.get("indent-detective.enableDebugMessages")
 
     subs.add(
         // Called for every TextEditor opening/closing
@@ -134,9 +141,9 @@ function run(editor: TextEditor) {
 }
 
 function setSettings(editor: TextEditor, length: lengthSetting) {
-    // if (enableDebug) {
-    //     console.log(`-> decided for ${length}`)
-    // }
+    if (enableDebug) {
+        console.log(`-> decided for ${length}`)
+    }
     if (length === 0) return // default settings
 
     if (length === "tab") {
@@ -193,10 +200,10 @@ function getIndent(editor: TextEditor) {
         previousIndent = indent
         numberOfCounts += 1
     }
-    // if (enableDebug) {
-    //     console.log(`Indent Detective report for ${editor.getPath()}`)
-    //     console.log(counts)
-    // }
+    if (enableDebug) {
+        console.log(`Indent Detective report for ${editor.getPath()}`)
+        console.log(counts)
+    }
     return bestOf(counts)
 }
 
