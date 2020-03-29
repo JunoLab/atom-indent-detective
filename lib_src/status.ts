@@ -9,7 +9,7 @@ export class IndentStatusItem {
 
     // Construct a statusbar item - Called only once for one session
     constructor() {
-        return this.createView()
+        this.createView()
     }
 
     // Called only once for one session
@@ -38,18 +38,16 @@ export class IndentStatusItem {
 
         // Initial Visibility
         this.updateDisplay(atom.workspace.getActiveTextEditor())
-
-        return this
     }
 
     // Toggles the visibility of statusbar item
     updateDisplay(editor?: TextEditor | undefined) {
         if (editor) {
             this.view.style.display = ""
-            return this.updateText(editor)
+            this.updateText(editor)
         } else {
             this.view.style.display = "none"
-            return this.clearText()
+            this.clearText()
         }
     }
 
@@ -61,16 +59,22 @@ export class IndentStatusItem {
         } else {
             text = "Tabs"
         }
-        return this.text != null ? (this.text.innerText = text) : undefined
+        if (this.text != null) {
+            this.text.innerText = text
+        }
     }
 
     // Called from updateDisplay
     clearText() {
-        return this.text != null ? (this.text.innerText = "") : undefined
+        if (this.text != null) {
+            this.text.innerText = ""
+        }
     }
 
     // Destroy when package is deactivated
     destroy() {
-        return this.tile != null ? this.tile.destroy() : undefined
+        if (this.tile != null) {
+            this.tile.destroy()
+        }
     }
 }
