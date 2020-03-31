@@ -9,7 +9,9 @@
         "array-type": false,
         "only-arrow-functions": false,
         "ordered-imports": false,
-        "object-literal-sort-keys": false
+        "object-literal-sort-keys": false,
+        "member-access": false,
+        "interface-name": false
     },
     "rulesDirectory": []
 }
