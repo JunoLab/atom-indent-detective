@@ -15,7 +15,7 @@ export class IndentStatusItem {
         this.text.innerText = "Spaces (2)"
         this.view.appendChild(this.text)
 
-        this.view.onclick = function() {
+        this.view.onclick = function () {
             const editor = atom.workspace.getActiveTextEditor()
             if (editor) {
                 atom.commands.dispatch(atom.views.getView(editor), "indent-detective:choose-indent")
@@ -31,7 +31,7 @@ export class IndentStatusItem {
         this.bar = bar
         return (this.tile = this.bar.addRightTile({
             item: this.view,
-            priority: 10.5
+            priority: 10.5,
         }))
     }
 

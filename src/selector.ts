@@ -43,12 +43,12 @@ export class Selector {
                 didCancelSelection: () => {
                     this.modalPanel.hide()
                     return {} // f()!
-                }
+                },
             })
 
             // Adding SelectListView to panel
             this.modalPanel = atom.workspace.addModalPanel({
-                item: this.indentListView
+                item: this.indentListView,
             })
         } else {
             console.error("First dispose() the object")
