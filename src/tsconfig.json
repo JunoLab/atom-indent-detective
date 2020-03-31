@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     //// Linting Options - Uncomment options to get more features (usually more restrictive)
-    // "strict": true,
+    "strict": true,
     "strictNullChecks": true,
     // "forceConsistentCasingInFileNames": true,
     "noUnusedLocals": true,
@@ -18,9 +18,10 @@
     "experimentalDecorators": true,
     "incremental": true,
     // "preserveConstEnums": true,
-    // "sourceMap": true,
+    "inlineSourceMap": true,
+    "inlineSources": true,
     "preserveSymlinks": true,
-    // "removeComments": true,
+    "removeComments": true,
     // "jsx": "react",
     // "jsxFactory": "etch.dom",
     "lib": ["ES2018", "dom"],

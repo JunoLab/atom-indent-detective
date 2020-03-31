@@ -11,7 +11,7 @@
     "typescript": "tsc -p src/tsconfig.json || echo done",
     "prettier_src": "prettier --write src/**/*.ts",
     "prettier_out": "prettier --write ./lib/**/*.js",
-    "babel": "babel lib --out-dir lib",
+    "babel": "babel lib --out-dir lib --source-maps inline",
     "lint": "eslint . --ext ts,js,json",
     "build": "npm run typescript -s && npm run babel -s",
     "prepare": "npm run build"
