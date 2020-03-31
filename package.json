@@ -1,6 +1,7 @@
 {
   "name": "indent-detective",
   "main": "./lib/indent-detective",
+  "files": ["lib/**/*"],
   "version": "0.4.0",
   "description": "Detect indentation settings in the active editor",
   "keywords": [],
@@ -11,8 +12,9 @@
     "prettier_src": "prettier --write src/**/*.ts",
     "prettier_out": "prettier --write ./lib/**/*.js",
     "babel": "babel lib --out-dir lib",
-    "lint": "eslint . --ext js,ts,json",
-    "build": "npm run typescript -s && npm run babel -s && npm run prettier_out -s"
+    "lint": "eslint . --ext ts,js,json",
+    "build": "npm run typescript -s && npm run babel -s",
+    "prepare": "npm run build"
   },
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
