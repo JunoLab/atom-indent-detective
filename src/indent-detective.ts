@@ -17,7 +17,10 @@ import { Selector } from "./selector"
 // type for length settings
 export type lengthSetting = number | "tab"
 // object to hold indent setting for one item
-export type IndentSetting = { text: string; length: lengthSetting }
+export interface IndentSetting {
+    text: string
+    length: lengthSetting
+}
 
 // TODO: make it const
 let possibleIndentations: Array<number>
