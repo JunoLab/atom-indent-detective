@@ -147,7 +147,7 @@ function setSettings(editor: TextEditor, length: lengthSetting) {
     if (enableDebug) {
         console.log(`-> decided for ${length}`)
     }
-    if (length === 0) return // default settings
+    if (length === 0) {return} // default settings
 
     if (length === "tab") {
         editor.setSoftTabs(false)
@@ -177,9 +177,9 @@ function getIndent(editor: TextEditor) {
     let numberOfCounts = 0
     const editorLines = editor.getBuffer().getLines()
     for (const line of editorLines) {
-        if (numberOfCounts > 150) break
+        if (numberOfCounts > 150) {break}
         row += 1
-        if (!isValidLine(row, line, editor)) continue
+        if (!isValidLine(row, line, editor)) {continue}
         const indent = lineIndent(line)
 
         if (indent == null) {
@@ -187,7 +187,7 @@ function getIndent(editor: TextEditor) {
             continue
         }
 
-        if (indent === "tab") return "tab"
+        if (indent === "tab") {return "tab"}
         const diff = Math.abs(indent - previousIndent)
 
         if (diff === 0) {
@@ -195,7 +195,7 @@ function getIndent(editor: TextEditor) {
                 counts[previousDiff] += 1
             }
         } else {
-            if (!counts[diff]) counts[diff] = 0
+            if (!counts[diff]) {counts[diff] = 0}
             counts[diff] += 1
             previousDiff = diff
         }
@@ -212,7 +212,7 @@ function getIndent(editor: TextEditor) {
 
 function isValidLine(row: number, line: string, editor: TextEditor) {
     // empty line
-    if (line.match(/^\s*$/)) return false
+    if (line.match(/^\s*$/)) {return false}
 
     // line is part of a comment or string
     const scopes = editor.scopeDescriptorForBufferPosition([row, 0]).getScopesArray()
