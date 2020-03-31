@@ -7,22 +7,8 @@ export class IndentStatusItem {
     text: HTMLElement | null
     view: HTMLElement
 
-    // Construct a statusbar item - Called only once for one session
+    // Construct a statusbar item - Called only once for one session inside `consumeStatusBar(bar: StatusBar)`
     constructor() {
-        this.createView()
-    }
-
-    // Called only once for one session
-    consumeStatusBar(bar: StatusBar) {
-        this.bar = bar
-        return (this.tile = this.bar.addRightTile({
-            item: this.view,
-            priority: 10.5
-        }))
-    }
-
-    // Called only once for one session
-    createView() {
         this.view = document.createElement("span")
         this.view.classList.add("indent-status", "inline-block")
         this.text = document.createElement("a")
@@ -38,6 +24,15 @@ export class IndentStatusItem {
 
         // Initial Visibility
         this.updateDisplay(atom.workspace.getActiveTextEditor())
+    }
+
+    // Called after `constructor()` and only once for one session inside `consumeStatusBar(bar: StatusBar)`
+    consumeStatusBar(bar: StatusBar) {
+        this.bar = bar
+        return (this.tile = this.bar.addRightTile({
+            item: this.view,
+            priority: 10.5
+        }))
     }
 
     // Toggles the visibility of statusbar item
