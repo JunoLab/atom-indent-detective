@@ -15,7 +15,8 @@
     "buildlocal": "npm run typescript",
     "build": "webpack --mode production",
     "dev": "webpack --mode none --watch",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "ppublish": "bash ./ppublish.sh"
   },
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
