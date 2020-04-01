@@ -11,9 +11,8 @@
     "typescript": "ttsc -p src/tsconfig.json || echo done",
     "prettier_src": "prettier --write src/**/*.ts",
     "prettier_out": "prettier --write ./lib/**/*.js",
-    "babel": "babel lib --out-dir lib --source-maps inline",
     "lint": "eslint . --ext ts,js,json",
-    "build": "npm run typescript -s && npm run babel -s",
+    "buildlocal": "npm run typescript",
     "prepare": "npm run build"
   },
   "engines": {
@@ -34,11 +33,7 @@
     "eslint-plugin-only-warn": "latest",
     "prettier": "latest",
     "tslint": "^6.1.0",
-    "tslint-config-prettier": "^1.18.0",
-    "babel-preset-minify": "^0.5.1",
-    "@babel/plugin-transform-for-of": "^7.8.6",
-    "@babel/core": "^7.8.7",
-    "@babel/cli": "^7.8.4"
+    "tslint-config-prettier": "^1.18.0"
   },
   "consumedServices": {
     "status-bar": {
@@ -51,31 +46,5 @@
     "semi": false,
     "printWidth": 110,
     "tabWidth": 4
-  },
-  "babel": {
-    "presets": [
-      [
-        "minify",
-        {
-          "deadcode": false,
-          "mangle": false,
-          "booleans": false,
-          "builtIns": false,
-          "flipComparisons": false,
-          "infinity": false,
-          "memberExpressions": false,
-          "simplifyComparisons": false,
-          "undefinedToVoid": false
-        }
-      ]
-    ],
-    "plugins": [
-      [
-        "@babel/plugin-transform-for-of",
-        {
-          "assumeArray": true
-        }
-      ]
-    ]
   }
 }
