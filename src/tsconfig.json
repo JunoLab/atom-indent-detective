@@ -31,7 +31,9 @@
     // "noLib": false,
     // "importHelpers": true, // if true you should add tslib to deps
     // "skipLibCheck": false,
-
+    "plugins": [
+      { "transform": "@sapphi-red/ts-transformer-for-of" } // https://github.com/sapphi-red/ts-transformer-for-of
+    ],
     "outDir": "../lib"
   },
   "compileOnSave": true
