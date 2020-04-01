@@ -8,11 +8,13 @@
   "repository": "https://github.com/JunoLab/atom-indent-detective",
   "license": "MIT",
   "scripts": {
-    "typescript": "ttsc -p src/tsconfig.json || echo done",
     "prettier_src": "prettier --write src/**/*.ts",
-    "prettier_out": "prettier --write ./lib/**/*.js",
+    "prettier_out": "prettier --write lib/**/*.js",
     "lint": "eslint . --ext ts,js,json",
+    "typescript": "ttsc -p src/tsconfig.json || echo done",
     "buildlocal": "npm run typescript",
+    "build": "webpack --mode production",
+    "dev": "webpack --mode none --watch",
     "prepare": "npm run build"
   },
   "engines": {
@@ -26,6 +28,9 @@
     "ttypescript": "^1.5.10",
     "typescript": "^3.8.3",
     "@sapphi-red/ts-transformer-for-of": "^0.6.0",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "ts-loader": "^6.2.2",
     "eslint": "latest",
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
