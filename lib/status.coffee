@@ -20,6 +20,8 @@ module.exports =
     @view.onclick = =>
       atom.commands.dispatch atom.views.getView(atom.workspace.getActiveTextEditor()),
        'indent-detective:choose-indent'
+    # Initial Visibility
+    @update(atom.workspace.getActiveTextEditor())
 
   update: (editor) ->
     if editor
