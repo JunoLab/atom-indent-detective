@@ -140,4 +140,13 @@ describe("IndentDetective", () => {
         })
     )
 
+
+    // TODO doesn't work
+    // it("When editor is not a text editor", async () => {
+    //     await atom.workspace.getActivePane().destroy()
+    //     let pane = await atom.workspace.open("atom://config/packages/indent-detective")
+    //
+    //     expect(indentStatus.style.display).toBe("none")
+    //     expect(indentStatus.querySelector("a").textContent).toBe("")
+    // })
 })
