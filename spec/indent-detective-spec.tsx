@@ -124,4 +124,20 @@ describe("IndentDetective", () => {
         })
     )
 
+    describe("when Tabs is selected", () =>
+        it("Soft tabs is disabled and Tabs is displated in status bar", async () => {
+            const indentView = await getIndentView(editor)
+            const indentSetting = { text: "Tabs", length: "tab" }
+            // @ts-ignore
+            indentView.props.didConfirmSelection(indentSetting)
+
+            // Tab length
+            expect(editor.getSoftTabs()).toBe(false)
+
+            // StatusBar
+            expect(indentStatus.style.display).toBe("")
+            expect(indentStatus.querySelector("a").textContent).toBe("Tabs")
+        })
+    )
+
 })
