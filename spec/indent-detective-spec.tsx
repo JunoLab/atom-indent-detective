@@ -30,6 +30,9 @@ describe("IndentDetective", () => {
         await atom.packages.activatePackage("status-bar")
         await atom.packages.activatePackage("indent-detective")
 
+        // Enable Debug Messages
+        await atom.config.set("indent-detective.enableDebugMessages", true)
+
         // Open AcuteML.jl
         editor = await atom.workspace.open(path.join(__dirname, "files", "AcuteML.jl")) as TextEditor
         expect(editor.element).toHaveFocus()
