@@ -5,7 +5,8 @@
     "atomtest": true,
     "es6": true,
     "node": true,
-    "browser": true
+    "browser": true,
+    "jasmine": true
   },
   "globals": { "atom": "writable" },
   "parserOptions": {
