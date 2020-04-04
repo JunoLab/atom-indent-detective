@@ -46,4 +46,20 @@ describe("IndentDetective", () => {
         }
         expect(indentStatus).toBeInstanceOf(HTMLElement)
     })
+
+    describe("Automatic Indent Calculation", () =>
+        it("Tab length is equal to AcuteML.jl's tab length and the name of the calculated indent is displayed in status bar ", () => {
+
+            // AcuteML.jl tab length is 4
+
+            // Tab length
+            expect(editor.getSoftTabs()).toBe(true)
+            expect(editor.getTabLength()).toBe(4)
+
+            // StatusBar
+            expect(indentStatus.style.display).toBe("")
+            expect(indentStatus.querySelector("a").textContent).toBe("Spaces (4)")
+        })
+    )
+
 })
