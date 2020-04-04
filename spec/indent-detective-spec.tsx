@@ -62,4 +62,32 @@ describe("IndentDetective", () => {
         })
     )
 
+    describe("when indent-selector:choose-indent is triggered", () =>
+        it("displays a list of all the available indent options", async () => {
+            const indentView = await getIndentView(editor)
+
+            // default settings
+            expect(indentView.items).toEqual([
+                { text: "Automatic", length: 0 },
+                { text: "2 Spaces", length: 2 },
+                { text: "3 Spaces", length: 3 },
+                { text: "4 Spaces", length: 4 },
+                { text: "6 Spaces", length: 6 },
+                { text: "8 Spaces", length: 8 },
+                { text: "Tabs", length: "tab" }
+            ])
+
+            const indentViewElement = indentView.element
+
+            // default settings
+            expect(indentViewElement.querySelectorAll("li").length).toBe(5 + 2)
+            expect(indentViewElement.querySelectorAll("li")[0].textContent).toBe("Automatic")
+            expect(indentViewElement.querySelectorAll("li")[1].textContent).toBe("2 Spaces")
+            expect(indentViewElement.querySelectorAll("li")[2].textContent).toBe("3 Spaces")
+            expect(indentViewElement.querySelectorAll("li")[3].textContent).toBe("4 Spaces")
+            expect(indentViewElement.querySelectorAll("li")[4].textContent).toBe("6 Spaces")
+            expect(indentViewElement.querySelectorAll("li")[5].textContent).toBe("8 Spaces")
+            expect(indentViewElement.querySelectorAll("li")[6].textContent).toBe("Tabs")
+        })
+    )
 })
