@@ -140,6 +140,14 @@ describe("IndentDetective", () => {
         })
     )
 
+    describe("When Clicking on StatusBar item", () =>
+        it("shows the selector menu", () => {
+            const eventHandler = jasmine.createSpy("eventHandler")
+            atom.commands.add(editor.getElement(), "indent-detective:choose-indent", eventHandler)
+            indentStatus.click()
+            expect(eventHandler).toHaveBeenCalled()
+        })
+    )
 
     // TODO doesn't work
     // it("When editor is not a text editor", async () => {
