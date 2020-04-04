@@ -108,4 +108,20 @@ describe("IndentDetective", () => {
         })
     )
 
+    describe("when Automatic is selected", () =>
+        it("AcuteML.jl tab length should be given (already calculated) and displayed in statusbar", async () => {
+            const indentView = await getIndentView(editor)
+            const indentSetting = { text: "Automatic", length: 0 }
+            indentView.props.didConfirmSelection(indentSetting)
+
+            // Tab length
+            expect(editor.getSoftTabs()).toBe(true)
+            expect(editor.getTabLength()).toBe(4) // AcuteML.jl tab length
+
+            // StatusBar
+            expect(indentStatus.style.display).toBe("")
+            expect(indentStatus.querySelector("a").textContent).toBe("Spaces (4)")
+        })
+    )
+
 })

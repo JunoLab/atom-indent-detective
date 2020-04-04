@@ -147,9 +147,10 @@ function setSettings(editor: TextEditor, length: lengthSetting) {
     if (enableDebug) {
         console.log(`-> decided for ${length}`)
     }
+    // Automatic
     if (length === 0) {
         return
-    } // default settings
+    } // Already calculated inside run by getIndent
 
     if (length === "tab") {
         editor.setSoftTabs(false)
