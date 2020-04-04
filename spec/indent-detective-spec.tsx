@@ -90,4 +90,22 @@ describe("IndentDetective", () => {
             expect(indentViewElement.querySelectorAll("li")[6].textContent).toBe("Tabs")
         })
     )
+
+
+    describe("when an indent option is selected", () =>
+        it("the tab length is set and displayed in status bar", async () => {
+            const indentView = await getIndentView(editor)
+            const indentSetting = { text: "2 Spaces", length: 2 } // Selected option
+            indentView.props.didConfirmSelection(indentSetting)
+
+            // Tab length
+            expect(editor.getSoftTabs()).toBe(true)
+            expect(editor.getTabLength()).toBe(indentSetting.length)
+
+            // StatusBar
+            expect(indentStatus.style.display).toBe("")
+            expect(indentStatus.querySelector("a").textContent).toBe("Spaces (2)")
+        })
+    )
+
 })
