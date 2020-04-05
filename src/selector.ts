@@ -39,7 +39,6 @@ export class Selector {
                 // called when the user presses Esc or the list loses focus. // use `=>` for `this`
                 didCancelSelection: () => {
                     this.modalPanel.hide()
-                    return {} // f()!
                 },
             })
 
