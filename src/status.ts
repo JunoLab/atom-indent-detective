@@ -2,7 +2,6 @@ import { TextEditor } from "atom"
 import { StatusBar, Tile } from "atom/status-bar"
 
 export class IndentStatusItem {
-    bar: StatusBar
     tile: Tile | null
     text: HTMLElement | null
     view: HTMLElement
@@ -28,8 +27,7 @@ export class IndentStatusItem {
 
     // Called after `constructor()` and only once for one session inside `consumeStatusBar(bar: StatusBar)`
     consumeStatusBar(bar: StatusBar) {
-        this.bar = bar
-        return (this.tile = this.bar.addRightTile({
+        return (this.tile = bar.addRightTile({
             item: this.view,
             priority: 10.5,
         }))
