@@ -1,12 +1,8 @@
 // TODO: Converting to wasm using https://docs.assemblyscript.org/
 
-/*
+
 // For Benchmark:
-let ti_activate = window.performance.now() // start parsing
-let tf_activate: number // finished activating
-let ti_run: number // start running
-let tf_run: number // finished running
-*/
+// const ti_activate = window.performance.now() // start parsing
 
 import { CompositeDisposable, Disposable, TextEditor } from "atom"
 import { StatusBar } from "atom/status-bar"
@@ -66,7 +62,7 @@ export function activate() {
     subs.add(
         // Called for every TextEditor opening/closing
         atom.workspace.observeTextEditors(function (editor: TextEditor) {
-            // ti_run = window.performance.now()
+            // const ti_run = window.performance.now()
 
             run(editor)
             const sub = editor.onDidStopChanging(() => {
@@ -79,8 +75,7 @@ export function activate() {
                 })
             )
 
-            // tf_run = window.performance.now()
-            // console.log("indent detective run  "+ (tf_run-ti_run) + "  ms")
+            // console.log("indent detective run  "+ (window.performance.now()-ti_run) + "  ms")
         }),
 
         atom.workspace.onDidStopChangingActivePaneItem((item) => {
@@ -110,8 +105,7 @@ export function activate() {
         })
     )
 
-    // tf_activate = window.performance.now()
-    // console.log("indent detective activation  "+ (tf_activate - ti_activate) + "  ms")
+    // console.log("indent detective activation  "+ (window.performance.now() - ti_activate) + "  ms")
 }
 
 export function deactivate() {
