@@ -119,8 +119,8 @@ export function deactivate() {
 
 // Called only once for each Atom session
 export function consumeStatusBar(bar: StatusBar) {
-    statusItem = new IndentStatusItem()
-    statusItem.consumeStatusBar(bar)
+    statusItem = new IndentStatusItem(bar)
+    return
 }
 
 // Runs for every TextEditor opening/closing
