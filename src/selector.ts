@@ -1,7 +1,5 @@
-const SelectListView = require("atom-select-list")
-
 // TODO: observe https://github.com/atom/atom-select-list/pull/28/files
-// import {SelectListView} from 'atom-select-list'
+import SelectListView from 'atom-select-list'
 
 import { TextEditor, Panel } from "atom"
 import { IndentSetting, setIndent } from "./indent-detective"
