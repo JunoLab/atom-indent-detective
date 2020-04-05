@@ -26,9 +26,13 @@ describe("IndentDetective", () => {
 
     beforeEach(async () => {
         jasmine.attachToDOM(atom.views.getView(atom.workspace))
+
         // Activate Packages
         await atom.packages.activatePackage("status-bar")
+        atom.packages.triggerActivationHook('core:loaded-shell-environment');
         await atom.packages.activatePackage("indent-detective")
+        expect(atom.packages.isPackageLoaded("indent-detective")).toBeTruthy()
+        atom.packages.triggerDeferredActivationHooks();
 
         // Enable Debug Messages
         await atom.config.set("indent-detective.enableDebugMessages", true)

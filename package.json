@@ -25,6 +25,9 @@
   "dependencies": {
     "atom-select-list": "^0.7.2"
   },
+  "activationHooks": [
+    "core:loaded-shell-environment"
+  ],
   "devDependencies": {
     "@types/atom": "^1.40.1",
     "ttypescript": "^1.5.10",
