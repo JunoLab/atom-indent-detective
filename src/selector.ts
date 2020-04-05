@@ -12,7 +12,6 @@ export class Selector {
 
     // Make a selector object (should be called once)
     constructor(SelectorItems: IndentSetting[]) {
-        if (!this.modalPanel) {
             // Defining a SelectListView with methods - https://github.com/atom/atom-select-list
             this.indentListView = new SelectListView({
                 // an array containing the objects you want to show in the select list
@@ -50,9 +49,6 @@ export class Selector {
             this.modalPanel = atom.workspace.addModalPanel({
                 item: this.indentListView,
             })
-        } else {
-            console.error("First dispose() the object")
-        }
     }
 
     // Show a selector object
