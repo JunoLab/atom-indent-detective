@@ -157,11 +157,28 @@ describe("IndentDetective", () => {
     )
 
     // TODO doesn't work
-    // it("When editor is not a text editor", async () => {
+    // describe("closing the text editor", () => {
+    //     it("displays no icon in the status bar", async () => {
+    //         atom.workspace.getActivePane().destroy()
+    //         expect(indentStatus.style.display).toBe("none")
+    //         expect(indentStatus.textContent).toBe("")
+    //     })
+    // })
+
+    // TODO doesn't work
+    // it("When the active editor is not a text editor", async () => {
     //     await atom.workspace.getActivePane().destroy()
     //     let pane = await atom.workspace.open("atom://config/packages/indent-detective")
-    //
     //     expect(indentStatus.style.display).toBe("none")
-    //     expect(indentStatus.querySelector("a").textContent).toBe("")
+    //     expect(indentStatus.textContent).toBe("")
     // })
+
+    // TODO doesn't work
+    // describe("when the package is deactivated", () =>
+    //     it("removes the view", async () => {
+    //         spyOn(indentTile, "destroy")
+    //         await atom.packages.deactivatePackage("indent-detective")
+    //         expect(indentTile.destroy).toHaveBeenCalled()
+    //     }))
+
 })
