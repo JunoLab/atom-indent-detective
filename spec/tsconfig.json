@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowJs": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "preserveSymlinks": true,
+    "removeComments": false,
+    "sourceMap": true, // not supported by jasmine https://github.com/jasmine/jasmine/issues/491#issuecomment-96063493
+    "lib": ["ES2018", "dom"],
+    "target": "ES2018",
+    "module": "commonjs",
+    "moduleResolution": "node"
+  },
+  "include": ["./**.tsx"],
+  "compileOnSave": false
+}

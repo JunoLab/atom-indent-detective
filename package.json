@@ -1,22 +1,64 @@
 {
   "name": "indent-detective",
   "main": "./lib/indent-detective",
+  "files": ["lib/**/*"],
   "version": "0.4.0",
   "description": "Detect indentation settings in the active editor",
   "keywords": [],
   "repository": "https://github.com/JunoLab/atom-indent-detective",
   "license": "MIT",
+  "scripts": {
+    "prettier_src": "prettier --write src/**/*.ts",
+    "prettier_out": "prettier --write lib/**/*.js",
+    "lint": "eslint . --ext ts,js,json",
+    "typescript": "ttsc -p src/tsconfig.json || echo done",
+    "buildlocal": "npm run typescript",
+    "build": "webpack --mode production",
+    "dev": "webpack --mode none --watch",
+    "test": "npm run build && (tsc -p spec/tsconfig.json || echo done) && atom --test spec",
+    "prepare": "npm run build",
+    "ppublish": "bash ./ppublish.sh"
+  },
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
   "dependencies": {
-    "atom-space-pen-views": "^2.0.0"
+    "atom-select-list": "^0.7.2"
   },
+  "activationHooks": [
+    "core:loaded-shell-environment"
+  ],
+  "devDependencies": {
+    "@types/atom": "^1.40.1",
+    "ttypescript": "^1.5.10",
+    "typescript": "^3.8.3",
+    "@sapphi-red/ts-transformer-for-of": "^0.6.0",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "ts-loader": "^6.2.2",
+    "eslint": "latest",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "eslint-plugin-json": "latest",
+    "eslint-plugin-only-warn": "latest",
+    "prettier": "latest",
+    "tslint": "^6.1.0",
+    "tslint-config-prettier": "^1.18.0",
+    "jasmine": "^3.5.0",
+    "@types/jasmine": "^3.5.10",
+    "atom-jasmine3-test-runner": "^4.4.4"
+  },
+  "atomTestRunner": "./spec/runner",
   "consumedServices": {
     "status-bar": {
       "versions": {
         "^1.0.0": "consumeStatusBar"
       }
     }
+  },
+  "prettier": {
+    "semi": false,
+    "printWidth": 110,
+    "tabWidth": 4
   }
 }
