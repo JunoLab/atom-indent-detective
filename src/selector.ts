@@ -1,12 +1,13 @@
 // TODO: observe https://github.com/atom/atom-select-list/pull/28/files
 import SelectListView from 'atom-select-list'
 
-import { TextEditor, Panel } from "atom"
+import { TextEditor, Panel, Pane } from "atom"
 import { IndentSetting, setIndent } from "./indent-detective"
 
 export class Selector {
     indentListView
     modalPanel: Panel
+    previousActivePane!: Pane
 
     // Make a selector object (should be called once)
     constructor(SelectorItems: IndentSetting[]) {
@@ -33,12 +34,12 @@ export class Selector {
                     if (editor instanceof TextEditor) {
                         setIndent(editor, indent)
                     }
-                    this.modalPanel.hide()
+                    this.hide()
                 },
 
                 // called when the user presses Esc or the list loses focus. // use `=>` for `this`
                 didCancelSelection: () => {
-                    this.modalPanel.hide()
+                    this.hide()
                 },
             })
 
@@ -50,10 +51,20 @@ export class Selector {
 
     // Show a selector object
     show() {
+        this.previousActivePane = atom.workspace.getActivePane()
+
         // Show selector
         this.indentListView.reset()
         this.modalPanel.show()
         this.indentListView.focus()
+    }
+
+    // Hide a selector
+    hide() {
+        // hide modal panel
+        this.modalPanel.hide()
+        // focus on the previous active pane
+        this.previousActivePane.activate()
     }
 
     // Dispose selector
