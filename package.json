@@ -36,7 +36,7 @@
     "typescript": "^3.8.3",
     "@sapphi-red/ts-transformer-for-of": "^0.6.0",
     "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11",
+    "webpack-cli": "^3.3.12",
     "ts-loader": "^6.2.2",
     "eslint": "latest",
     "@typescript-eslint/eslint-plugin": "latest",
